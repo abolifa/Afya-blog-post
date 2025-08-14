@@ -1,19 +1,16 @@
 import Navbar from "@/components/navbar";
 import TopBar from "@/components/top-bar";
-import React from "react";
 import AnnounceWidget from "./widgets/announce-widget";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full h-full flex flex-col bg-accent">
+    <div className="min-h-dvh bg-accent">
       <TopBar />
       <Navbar />
-      <div className="flex-1 container mx-auto max-w-7xl lg:max-w-6xl bg-background border shadow">
-        <AnnounceWidget />
+      <AnnounceWidget />
+      <main className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-5 bg-background border shadow-lg">
         {children}
-      </div>
+      </main>
     </div>
   );
-};
-
-export default Layout;
+}

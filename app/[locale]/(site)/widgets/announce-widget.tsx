@@ -22,7 +22,6 @@ const AnnounceWidget = () => {
     },
   });
 
-  // Autoplay every 6s (matches the code)
   useEffect(() => {
     if (!data || data.length === 0 || isPaused) return;
     const id = setInterval(() => {
@@ -54,12 +53,11 @@ const AnnounceWidget = () => {
 
   const currentAnnouncement = data[currentIndex];
 
-  // Animation variants for vertical slide + fade
   const variants = {
     enter: (dir: 1 | -1) => ({
-      y: dir === 1 ? 16 : -16, // start slightly offset (px)
+      y: dir === 1 ? 16 : -16,
       opacity: 0,
-      position: "absolute" as const, // stack during transition
+      position: "absolute" as const,
       width: "100%",
     }),
     center: {
@@ -69,7 +67,7 @@ const AnnounceWidget = () => {
       width: "100%",
     },
     exit: (dir: 1 | -1) => ({
-      y: dir === 1 ? -16 : 16, // leave opposite direction
+      y: dir === 1 ? -16 : 16,
       opacity: 0,
       position: "absolute" as const,
       width: "100%",
@@ -77,21 +75,14 @@ const AnnounceWidget = () => {
   };
 
   return (
-    <div className="px-5 lg:px-10">
-      <div className="flex items-center border bg-accent">
-        {/* Label */}
+    <div className="container mx-auto max-w-6xl bg-background">
+      <div className="flex items-center">
         <div className="bg-primary text-primary-foreground flex items-center gap-2 px-4 h-12 whitespace-nowrap">
           <Zap className="w-4 h-4" />
           <span className="font-medium">الإعلانات</span>
         </div>
-
-        {/* Announcement text (animated) */}
         <div className="relative flex-1 h-12 px-3 overflow-hidden">
-          <AnimatePresence
-            mode="wait" // wait for exit before enter -> smooth
-            custom={direction} // pass direction to variants
-            initial={false}
-          >
+          <AnimatePresence mode="wait" custom={direction} initial={false}>
             <motion.div
               key={currentAnnouncement.id}
               variants={variants}
@@ -99,7 +90,7 @@ const AnnounceWidget = () => {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.25, ease: "easeOut" }} // snappy
+              transition={{ duration: 0.25, ease: "easeOut" }}
               className="h-12 flex items-center"
             >
               <a
@@ -112,7 +103,6 @@ const AnnounceWidget = () => {
             </motion.div>
           </AnimatePresence>
         </div>
-
         {/* Controls */}
         <div className="flex items-center divide-x">
           <button

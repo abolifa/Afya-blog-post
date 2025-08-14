@@ -5,7 +5,23 @@ import { Stats as StatsType } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import CountUp from "react-countup";
-import { Separator } from "./ui/separator";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import {
+  Building,
+  CalendarDays,
+  Computer,
+  Package,
+  Stethoscope,
+  User,
+  Users,
+} from "lucide-react";
 
 const labels: Record<string, string> = {
   centers: "إجمالي عدد المراكز المسجلة",
@@ -25,6 +41,15 @@ const titles: Record<string, string> = {
   doctors: "الأطباء",
 };
 
+const icons: Record<string, React.ReactNode> = {
+  centers: <Building />,
+  patients: <Users />,
+  appointments: <CalendarDays />,
+  orders: <Package />,
+  devices: <Computer />,
+  doctors: <Stethoscope />,
+};
+
 export default function Stats() {
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["numbers"],
@@ -41,23 +66,22 @@ export default function Stats() {
   return (
     <div className="flex flex-col gap-5">
       <h1 className="text-xl font-bold">إحصائيات الهيئة</h1>
-      <Separator />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {Object.entries(data ?? {}).map(([key, value]) => (
-          <div
-            key={key}
-            className="rounded-xl flex flex-col items-center gap-2 p-4 py-5 shadow-md border bg-muted"
-          >
-            <h2 className="text-xl font-bold tracking-tight text-teal-500">
-              {titles[key] ?? key}
-            </h2>
-            <div className="text-3xl font-bold">
+          <Card key={key} className="gap-2">
+            <CardHeader className="flex items-center justify-center gap-2">
+              <div className="text-muted-foreground">{icons[key]}</div>
+              <CardTitle className="text-teal-500 text-lg font-bold">
+                {titles[key] ?? key}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex items-center justify-center text-3xl font-bold">
               <CountUp end={Number(value)} duration={2} separator="," />
-            </div>
-            <p className="text-md text-muted-foreground">
-              {labels[key] ?? key}
-            </p>
-          </div>
+            </CardContent>
+            <CardFooter className="flex items-center justify-center">
+              <CardDescription>{labels[key] ?? key}</CardDescription>
+            </CardFooter>
+          </Card>
         ))}
       </div>
     </div>

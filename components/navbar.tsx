@@ -11,7 +11,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="w-full bg-background sticky top-0 z-50 shadow-sm border-b">
+    <header className="w-full bg-background sticky top-0 z-50 border-b">
       <div className="px-5 lg:px-10">
         <div className="flex items-center justify-between h-20">
           {/* Logo and Title */}
