@@ -28,6 +28,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { useTranslations } from "next-intl";
 
 const schema = z.object({
   name: z.string().max(80).optional(),
@@ -43,6 +44,7 @@ type FormValues = z.infer<typeof schema>;
 
 export default function Complaints() {
   const [submitted, setSubmitted] = React.useState(false);
+  const t = useTranslations();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -74,14 +76,16 @@ export default function Complaints() {
     return (
       <Card className="border bg-card/80 backdrop-blur-sm">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-xl font-bold">تم استلام شكواك</CardTitle>
+          <CardTitle className="text-xl font-bold">
+            {t("complaint_received")}
+          </CardTitle>
           <CardDescription className="text-muted-foreground">
-            سنقوم بمراجعتها والرد في أقرب وقت. شكرًا لتواصلك.
+            {t("send_apply_complaint_subtitle")}
           </CardDescription>
         </CardHeader>
         <CardFooter>
           <Button variant="outline" onClick={() => setSubmitted(false)}>
-            إرسال شكوى جديدة
+            {t("send_new_complaint")}
           </Button>
         </CardFooter>
       </Card>
@@ -91,9 +95,11 @@ export default function Complaints() {
   return (
     <Card className="border backdrop-blur-sm">
       <CardHeader className="space-y-1">
-        <CardTitle className="text-xl font-bold">تقديم شكوى</CardTitle>
+        <CardTitle className="text-xl font-bold">
+          {t("apply_complaint")}
+        </CardTitle>
         <CardDescription className="text-muted-foreground">
-          نُقدّر رسالتك. املأ الحقول التالية وسيتم تحويلها للجهة المختصة.
+          {t("apply_complaint_subtitle")}
         </CardDescription>
       </CardHeader>
       <Separator />
@@ -117,11 +123,11 @@ export default function Complaints() {
               name="name"
               render={({ field }) => (
                 <FormItem className="sm:col-span-1">
-                  <FormLabel>الإسم (اختياري)</FormLabel>
+                  <FormLabel>{t("apply_name")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
-                      placeholder="اكتب اسمك هنا"
+                      placeholder={t("apply_name_placeholder")}
                       autoComplete="name"
                       inputMode="text"
                     />
@@ -136,7 +142,7 @@ export default function Complaints() {
               name="phone"
               render={({ field }) => (
                 <FormItem className="sm:col-span-1">
-                  <FormLabel>رقم الهاتف (اختياري)</FormLabel>
+                  <FormLabel>{t("apply_phone")}</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -157,7 +163,7 @@ export default function Complaints() {
               render={({ field }) => (
                 <FormItem className="sm:col-span-2">
                   <div className="flex items-center justify-between">
-                    <FormLabel>نص الرسالة</FormLabel>
+                    <FormLabel>{t("apply_message")}</FormLabel>
                     <span
                       className={`text-xs ${
                         remaining < 0
@@ -167,14 +173,14 @@ export default function Complaints() {
                           : "text-muted-foreground"
                       }`}
                     >
-                      {remaining} حرف متبقٍ
+                      {remaining} {t("chars_remaining")}
                     </span>
                   </div>
                   <FormControl>
                     <Textarea
                       {...field}
                       className="min-h-32 resize-y"
-                      placeholder="اكتب تفاصيل الشكوى بوضوح…"
+                      placeholder={t("apply_message_placeholder")}
                       maxLength={500}
                     />
                   </FormControl>
@@ -192,16 +198,16 @@ export default function Complaints() {
                 {form.formState.isSubmitting ? (
                   <span className="inline-flex items-center gap-2">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    جارِ الإرسال…
+                    {t("sending")}
                   </span>
                 ) : (
-                  "تقديم"
+                  t("send")
                 )}
               </Button>
 
               {form.formState.isSubmitting && (
                 <p className="text-sm text-muted-foreground">
-                  لا تُغلق الصفحة أثناء الإرسال.
+                  {t("dont_close_page")}
                 </p>
               )}
             </div>
@@ -210,7 +216,7 @@ export default function Complaints() {
       </CardContent>
 
       <CardFooter className="text-xs text-muted-foreground">
-        بإرسال هذه الرسالة، فإنك توافق على معالجة بياناتك وفق سياسات الهيئة.
+        {t("by_sending_your_message")}
       </CardFooter>
     </Card>
   );

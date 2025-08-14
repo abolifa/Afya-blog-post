@@ -6,15 +6,20 @@ import { ModeToggle } from "./mode-toggle";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import MainMenu from "./main-menu";
+import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const t = useTranslations();
+
+  const locale = useLocale();
 
   return (
     <header className="w-full bg-background sticky top-0 z-50 border-b">
       <div className="px-5 lg:px-10">
         <div className="flex items-center justify-between h-20">
-          <Link href="/" className="flex items-center gap-3">
+          <Link href={`/${locale}`} className="flex items-center gap-3">
             <Image
               src="/logo.png"
               alt="Logo"
@@ -25,10 +30,12 @@ const Navbar = () => {
             />
             <div className="flex flex-col leading-tight">
               <h1 className="text-base md:text-lg font-bold whitespace-nowrap">
-                الهيئة الوطنية لأمراض الكلى
+                {t("national_nephrology_authority")}
               </h1>
               <p className="text-xs md:text-sm tracking-wider text-muted-foreground">
-                National Kidney Disease Authority
+                {locale == "ar"
+                  ? "National Kidney Disease Authority"
+                  : "الهيئة الوطنية لأمراض الكلى"}
               </p>
             </div>
           </Link>

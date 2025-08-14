@@ -3,7 +3,7 @@
 import { api } from "@/lib/api";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MoveLeft, MoveRight } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import React from "react";
 import { usePathname, useRouter, Link } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
@@ -11,13 +11,14 @@ import { LaravelPage, Post } from "@/lib/types";
 import PostContainer from "@/components/post-container";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import queryClient from "@/lib/client";
 
 export default function TopPosts() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const queryClient = useQueryClient();
+  const t = useTranslations();
 
   const pageFromUrl = Number(searchParams.get("page") ?? 1);
   const [page, setPage] = React.useState(pageFromUrl);
@@ -63,9 +64,7 @@ export default function TopPosts() {
   return (
     <div className="w-full flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold">
-          {locale === "ar" ? "أحدث المقالات" : "Latest Posts"}
-        </h2>
+        <h2 className="text-xl font-bold">{t("latest_posts")}</h2>
 
         <div className="mt-4 flex items-center justify-center gap-1">
           <Button

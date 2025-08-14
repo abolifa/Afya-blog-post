@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 
@@ -36,6 +36,8 @@ export default function MainMenu({ onClick }: { onClick?: () => void }) {
   const pathname = usePathname();
   const locale = useLocale();
 
+  const t = useTranslations();
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["awareness"],
     queryFn: async () => {
@@ -56,46 +58,46 @@ export default function MainMenu({ onClick }: { onClick?: () => void }) {
     : [{ label: "لا توجد بيانات", href: "#" }];
 
   const menuItems: MenuItem[] = [
-    { label: "الرئيسية", href: "/" },
+    { label: t("home"), href: "/" },
     {
-      label: "الهيئة",
+      label: t("authority"),
       children: [
         {
-          label: "حول الهيئة",
+          label: t("about_authority"),
           href: "/about/about",
         },
         {
-          label: "رؤيتنا",
+          label: t("our_vision"),
           href: "/about/vision",
         },
         {
-          label: "السياسات الصحية",
+          label: t("health_policies"),
           href: "/about/policies",
         },
         {
-          label: "الهيكل التنظيمي",
+          label: t("organizational_structure"),
           href: "/about/structure",
         },
         {
-          label: "فريق العمل",
+          label: t("our_team"),
           href: "/about/team",
         },
         {
-          label: "الأسئلة الشائعة",
+          label: t("faqs"),
           href: "/about/faqs",
         },
       ],
     },
-    { label: "التوعية الصحية", children: awarenessChildren },
-    { label: "الخريطة التفاعلية", href: "/map" },
+    { label: t("health_awareness"), children: awarenessChildren },
+    { label: t("reactive_map"), href: "/map" },
     {
-      label: "تواصل معنا",
+      label: t("contact_us"),
       children: [
-        { label: "اتصل بنا", href: "/contact/phone" },
-        { label: "البريد الإلكتروني", href: "/contact/email" },
+        { label: t("phone_contact"), href: "/contact/phone" },
+        { label: t("email_contact"), href: "/contact/email" },
       ],
     },
-    { label: "البوابة الإلكترونية", href: "https://portal.romuz.com.ly" },
+    { label: t("medical_portal"), href: "https://portal.romuz.com.ly" },
   ];
 
   const isActive = (href?: string) => {
@@ -108,7 +110,7 @@ export default function MainMenu({ onClick }: { onClick?: () => void }) {
     <nav className="flex flex-col md:flex-row gap-4 md:gap-6">
       {menuItems.map((item) =>
         item.children ? (
-          <DropdownMenu key={item.label} dir="rtl">
+          <DropdownMenu key={item.label} dir={locale == "ar" ? "rtl" : "ltr"}>
             <DropdownMenuTrigger
               className={clsx(
                 "flex items-center gap-1 text-sm font-medium transition-colors hover:text-primary focus:outline-none",

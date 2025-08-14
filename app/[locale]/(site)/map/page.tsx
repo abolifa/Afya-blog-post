@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { MapPin, LocateFixed } from "lucide-react";
 import { useMap } from "react-leaflet";
 import MapWrapper from "@/components/map-wrapper";
+import { useTranslations } from "next-intl";
 
 const Marker = dynamic(() => import("react-leaflet").then((m) => m.Marker), {
   ssr: false,
@@ -40,6 +41,7 @@ function FitBounds({ points }: { points: Array<[number, number]> }) {
 }
 
 export default function CentersMap() {
+  const t = useTranslations();
   const { data, isLoading, isError } = useQuery({
     queryKey: ["centers"],
     queryFn: async () => (await api.get("/centers/guest")).data as Center[],
@@ -81,20 +83,22 @@ export default function CentersMap() {
     [filtered]
   );
 
-  if (isLoading) return <div className="py-8">تحميل المراكز</div>;
+  if (isLoading) return <div className="py-8">{t("loading")}</div>;
   if (isError)
-    return <div className="py-8 text-red-500">Error loading centers.</div>;
+    return (
+      <div className="py-8 text-red-500">{t("error_loading_centers")}</div>
+    );
 
   return (
     <div className="w-full grid gap-3 md:grid-cols-[320px_1fr]">
       {/* Filters */}
       <aside className="bg-card border rounded-lg p-3 space-y-3">
-        <div className="font-semibold">البحث عن مركز</div>
+        <div className="font-semibold">{t("search_for_center")}</div>
 
         <Input
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="بحث..."
+          placeholder={t("search_place")}
           className="w-full"
         />
 
@@ -105,14 +109,14 @@ export default function CentersMap() {
           <SelectContent>
             {cities.map((c) => (
               <SelectItem key={c} value={c}>
-                {c === "all" ? "كل المدن" : c}
+                {c === "all" ? t("all_cities") : c}
               </SelectItem>
             ))}
           </SelectContent>
         </Select>
 
         <div className="text-sm text-muted-foreground">
-          عرض {filtered.length} من {data?.length ?? 0}
+          {t("view")} {filtered.length} {t("of")} {data?.length ?? 0}
         </div>
 
         <Button
@@ -126,7 +130,7 @@ export default function CentersMap() {
             );
           }}
         >
-          <LocateFixed className="w-4 h-4 mr-2" /> استخدم موقعي
+          <LocateFixed className="w-4 h-4 mr-2" /> {t("use_my_location")}
         </Button>
       </aside>
 
@@ -135,7 +139,7 @@ export default function CentersMap() {
         <MapWrapper>
           {userPos && (
             <Marker position={userPos}>
-              <Popup>موقعك الحالي</Popup>
+              <Popup>{t("your_current_location")}</Popup>
             </Marker>
           )}
 
@@ -162,13 +166,13 @@ export default function CentersMap() {
                     </div>
                     <div className="flex items-center gap-2">
                       {isOpenNow((c as any).schedules) ? (
-                        <Badge>مفتوح الآن</Badge>
+                        <Badge>{t("open_now")}</Badge>
                       ) : (
-                        <Badge variant="secondary">مغلق</Badge>
+                        <Badge variant="secondary">{t("closed")}</Badge>
                       )}
                       <span className="text-xs text-muted-foreground">
                         {todayRanges((c as any).schedules).join(" • ") ||
-                          "No hours today"}
+                          t("no_hours_today")}
                       </span>
                     </div>
                   </div>

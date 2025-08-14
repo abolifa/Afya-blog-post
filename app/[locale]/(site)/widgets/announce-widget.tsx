@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Zap, ChevronUp, ChevronDown, Pause, Play } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { BeatLoader } from "react-spinners";
 
 const AnnounceWidget = () => {
@@ -14,6 +14,8 @@ const AnnounceWidget = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [direction, setDirection] = useState<1 | -1>(1);
+
+  const t = useTranslations();
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["announcements"],
@@ -49,7 +51,7 @@ const AnnounceWidget = () => {
         <div className="flex items-center">
           <div className="bg-primary text-primary-foreground flex items-center gap-2 px-4 h-12 whitespace-nowrap">
             <Zap className="w-4 h-4" />
-            <span className="font-medium">الإعلانات</span>
+            <span className="font-medium">{t("announcements")}</span>
           </div>
           <div className="px-3">
             <BeatLoader
@@ -94,7 +96,7 @@ const AnnounceWidget = () => {
       <div className="flex items-center">
         <div className="bg-primary text-primary-foreground flex items-center gap-2 px-4 h-12 whitespace-nowrap">
           <Zap className="w-4 h-4" />
-          <span className="font-medium">الإعلانات</span>
+          <span className="font-medium">{t("announcements")}</span>
         </div>
         <div className="relative flex-1 h-12 px-3 overflow-hidden">
           <AnimatePresence mode="wait" custom={direction} initial={false}>

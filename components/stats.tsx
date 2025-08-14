@@ -21,6 +21,7 @@ import {
   Stethoscope,
   Users,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const labels: Record<string, string> = {
   centers: "إجمالي عدد المراكز المسجلة",
@@ -50,6 +51,7 @@ const icons: Record<string, React.ReactNode> = {
 };
 
 export default function Stats() {
+  const t = useTranslations();
   const { data, isLoading, isError, error } = useQuery({
     queryKey: ["numbers"],
     queryFn: async () => {
@@ -64,7 +66,7 @@ export default function Stats() {
 
   return (
     <div className="flex flex-col gap-5">
-      <h1 className="text-xl font-bold">إحصائيات الهيئة</h1>
+      <h1 className="text-xl font-bold">{t("authority_stats")}</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {Object.entries(data ?? {}).map(([key, value]) => (
           <Card key={key} className="gap-2">

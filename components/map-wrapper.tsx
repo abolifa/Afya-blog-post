@@ -20,9 +20,7 @@ export default function MapWrapper({
   const mapId = React.useId();
 
   React.useEffect(() => {
-    // Import leaflet only in client
     import("leaflet").then((L) => {
-      // Remove old map container on hot reload
       const container = L.DomUtil.get(mapId);
       if (container && (container as any)._leaflet_id) {
         (container as any)._leaflet_id = null;
