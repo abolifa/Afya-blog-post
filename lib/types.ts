@@ -99,3 +99,62 @@ export type FormState = {
   phone: string;
   message: string;
 };
+
+export type OrgNode = {
+  id: string | number;
+  name: string;
+  type?: string;
+  leader?: { name: string; title?: string; phone?: string; email?: string };
+  children?: OrgNode[];
+  slug?: string;
+  updated_at?: string;
+};
+
+export type OrgResponse = {
+  root: OrgNode;
+  updated_at?: string;
+};
+
+export type AboutResponse = {
+  id: number;
+  about_title?: string;
+  about_description?: string;
+};
+
+export type VisionResponse = {
+  id: number;
+  vision_title?: string;
+  vision_description?: string;
+};
+
+export type HealthPolicyResponse = {
+  id: number;
+  health_policy_title?: string;
+  health_policy_description?: string;
+};
+
+export type TeamMember = {
+  id: number;
+  team_member_name: string;
+  team_members_members: string[];
+};
+
+export type TeamsResponse = {
+  id: number;
+  teams_title: string;
+  teams_description: string;
+  team_members: TeamMember[];
+};
+
+export type FaqsItem = {
+  id: number;
+  faq_answer: string;
+  faq_question: string;
+};
+
+export type FaqsResponse = {
+  id: number;
+  faqs_title: string;
+  faqs_description: string;
+  faqs: FaqsItem[];
+};

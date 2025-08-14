@@ -19,13 +19,12 @@ import {
   Computer,
   Package,
   Stethoscope,
-  User,
   Users,
 } from "lucide-react";
 
 const labels: Record<string, string> = {
   centers: "إجمالي عدد المراكز المسجلة",
-  patients: "عدد المرضي المسجلين بالبوابة الإكلترونية",
+  patients: "عدد المستفيدين المسجلين بالبوابة الإكلترونية",
   appointments: "إجمالي المواعيد الإفتراضية",
   orders: "إجمالي طلبات المرضى التي تم توفيتها",
   devices: "إجمالي الأجهزة",
@@ -34,7 +33,7 @@ const labels: Record<string, string> = {
 
 const titles: Record<string, string> = {
   centers: "المراكز",
-  patients: "المرضى",
+  patients: "المستفيدين من الخدمات",
   appointments: "المواعيد",
   orders: "طلبات المرضى",
   devices: "الأجهزة",
@@ -71,7 +70,7 @@ export default function Stats() {
           <Card key={key} className="gap-2">
             <CardHeader className="flex items-center justify-center gap-2">
               <div className="text-muted-foreground">{icons[key]}</div>
-              <CardTitle className="text-teal-500 text-lg font-bold">
+              <CardTitle className="text-teal-500 text-base text-ellipsis font-bold">
                 {titles[key] ?? key}
               </CardTitle>
             </CardHeader>

@@ -89,14 +89,13 @@ export default function Complaints() {
   }
 
   return (
-    <Card className="border bg-card/80 backdrop-blur-sm">
+    <Card className="border backdrop-blur-sm">
       <CardHeader className="space-y-1">
         <CardTitle className="text-xl font-bold">تقديم شكوى</CardTitle>
         <CardDescription className="text-muted-foreground">
           نُقدّر رسالتك. املأ الحقول التالية وسيتم تحويلها للجهة المختصة.
         </CardDescription>
       </CardHeader>
-
       <Separator />
 
       <CardContent className="pt-6">
@@ -144,7 +143,7 @@ export default function Complaints() {
                       type="tel"
                       inputMode="tel"
                       autoComplete="tel"
-                      placeholder="09XXXXXXXX"
+                      placeholder="0912345678"
                     />
                   </FormControl>
                   <FormMessage />

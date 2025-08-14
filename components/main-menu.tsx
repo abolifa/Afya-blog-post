@@ -57,7 +57,35 @@ export default function MainMenu({ onClick }: { onClick?: () => void }) {
 
   const menuItems: MenuItem[] = [
     { label: "الرئيسية", href: "/" },
-    { label: "من نحن", href: "/about" },
+    {
+      label: "الهيئة",
+      children: [
+        {
+          label: "حول الهيئة",
+          href: "/about/about",
+        },
+        {
+          label: "رؤيتنا",
+          href: "/about/vision",
+        },
+        {
+          label: "السياسات الصحية",
+          href: "/about/policies",
+        },
+        {
+          label: "الهيكل التنظيمي",
+          href: "/about/structure",
+        },
+        {
+          label: "فريق العمل",
+          href: "/about/team",
+        },
+        {
+          label: "الأسئلة الشائعة",
+          href: "/about/faqs",
+        },
+      ],
+    },
     { label: "التوعية الصحية", children: awarenessChildren },
     { label: "الخريطة التفاعلية", href: "/map" },
     {
@@ -105,7 +133,6 @@ export default function MainMenu({ onClick }: { onClick?: () => void }) {
                   >
                     {placeholder ? (
                       <div className="flex items-center gap-2 opacity-70 cursor-not-allowed">
-                        <span className="font-bold">-</span>
                         <span>{child.label}</span>
                       </div>
                     ) : (
@@ -116,7 +143,6 @@ export default function MainMenu({ onClick }: { onClick?: () => void }) {
                         rel={external ? "noopener noreferrer" : undefined}
                         className="flex items-center gap-2"
                       >
-                        <span className="font-bold">-</span>
                         <span>{child.label}</span>
                       </Link>
                     )}

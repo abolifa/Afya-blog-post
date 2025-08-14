@@ -7,6 +7,7 @@ import { Zap, ChevronUp, ChevronDown, Pause, Play } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLocale } from "next-intl";
+import { BeatLoader } from "react-spinners";
 
 const AnnounceWidget = () => {
   const lang = useLocale();
@@ -44,11 +45,25 @@ const AnnounceWidget = () => {
 
   if (isLoading) {
     return (
-      <div className="h-12 flex items-center justify-center">
-        جاري التحميل...
+      <div className="container mx-auto max-w-6xl bg-background">
+        <div className="flex items-center">
+          <div className="bg-primary text-primary-foreground flex items-center gap-2 px-4 h-12 whitespace-nowrap">
+            <Zap className="w-4 h-4" />
+            <span className="font-medium">الإعلانات</span>
+          </div>
+          <div className="px-3">
+            <BeatLoader
+              color="#000000"
+              size={10}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+          </div>
+        </div>
       </div>
     );
   }
+
   if (isError || !data || data.length === 0) return null;
 
   const currentAnnouncement = data[currentIndex];
