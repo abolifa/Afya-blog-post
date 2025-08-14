@@ -158,3 +158,12 @@ export type FaqsResponse = {
   faqs_description: string;
   faqs: FaqsItem[];
 };
+
+export type PhoneContact = {
+  id: number;
+  title: string;
+  type: "phone" | "email";
+  value: string[];
+  time_period: string;
+  zone: string;
+};

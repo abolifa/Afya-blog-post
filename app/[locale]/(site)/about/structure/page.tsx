@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 
 import { Printer, ChevronDown, Users2, Building2 } from "lucide-react";
 import clsx from "clsx";
-import { OrgNode, OrgResponse } from "@/lib/types";
+import { OrgNode } from "@/lib/types";
 import { OrgStructure } from "@/constant/data";
 
 function normalizeTree(node?: OrgNode): OrgNode | null {
@@ -200,8 +200,6 @@ export default function OrgStructurePage() {
         <div>
           <nav className="text-sm text-muted-foreground mb-1">
             <Link href="/">الرئيسية</Link>
-            <span className="mx-1">/</span>
-            <Link href="/about">عن الهيئة</Link>
             <span className="mx-1">/</span>
             <span className="text-foreground">الهيكل التنظيمي</span>
           </nav>
